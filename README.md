@@ -1,10 +1,15 @@
 # Open Any Url
 
+在VSCode标签页中打开任意URL，使你在写代码时更沉浸地阅读文档、浏览网页
+
 This is a extension for VSCode.
 
 You can use Open Any Url to open any url in VSCode.
 
-输入一个URL，在VSCode中打开它
+
+## 示例
+
+![截图](https://s2.loli.net/2021/12/14/skNCT2MUfz3OPcw.png)
 
 ## Usage
 
