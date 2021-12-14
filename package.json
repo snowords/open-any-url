@@ -1,0 +1,65 @@
+{
+	"name": "open-any-url",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/snowords/open-any-url.git"
+	},
+	"displayName": "Open Any Url",
+	"description": "Open Any Url extension for VSCode",
+	"version": "1.0.0",
+	"author": {
+		"name": "snowords"
+	},
+	"publisher": "snowords",
+	"engines": {
+		"vscode": "^1.63.0"
+	},
+	"categories": [
+		"Other", "Keymaps", "Language Packs", "Extension Packs"
+	],
+	"keywords": ["vscode", "plugin", "webView", "inner brower", "open any url", "open url in vscode"],
+	"icon": "Images/icon.png",
+	"activationEvents": [
+		"onCommand:OpenAnyUrl.Start"
+	],
+	"main": "./extension.js",
+	"contributes": {
+		"commands": [{
+			"command": "OpenAnyUrl.Start",
+			"title": "打开任意URL",
+			"category": "Brower",
+			"icon": {
+				"light": "Images/icon.svg",
+				"dark": "Images/icon.svg"
+			}
+		}],
+		"keybindings": [{
+			"command": "OpenAnyUrl.Start",
+			"key": "ctrl+f3",
+			"mac": "cmd+f3"
+		}]
+	},
+	"license": "SEE LICENSE IN LICENSE.md",
+	"bugs": {
+		"url": "https://github.com/snowords/open-any-url/issues",
+		"email": "zhengxinzhe@jackyzheng.uu.me"
+	},
+	"homepage": "https://github.com/snowords/open-any-url/blob/master/README.md",
+
+	"scripts": {
+		"lint": "eslint .",
+		"pretest": "npm run lint",
+		"test": "node ./test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.48.0",
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.0.0",
+		"@types/node": "^14.0.27",
+		"eslint": "^7.6.0",
+		"glob": "^7.1.6",
+		"mocha": "^8.0.1",
+		"typescript": "^3.8.3",
+		"vscode-test": "^1.4.0"
+	}
+}
