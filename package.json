@@ -6,7 +6,7 @@
 	},
 	"displayName": "Open Any Url",
 	"description": "Open Any Url extension for VSCode",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": {
 		"name": "snowords"
 	},
