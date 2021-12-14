@@ -50,9 +50,9 @@ function activate(context) {
 				// 1.创建并显示Webview
 				const panel = vscode.window.createWebviewPanel(
 					// 该webview的标识，任意字符串
-					'WeRead',
+					'OpenAnyUrl',
 					// webview面板的标题，会展示给用户
-					'微信读书',
+					url.split('/')[2] || '新标签页',
 					// webview面板所在的分栏
 					vscode.ViewColumn.One,
 					// 其它webview选项
