@@ -97,7 +97,7 @@ function activate(context) {
 										</body>
 										</html>`;
 			}else {
-				vscode.window.showInformationMessage("未输入Url");
+				vscode.window.showInformationMessage("未输入任何Url");
 			}
 		});
 
