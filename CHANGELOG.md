@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/snowords/open-any-url/compare/v1.1.0...v1.1.1) (2021-12-14)
+
+
+### Bug Fixes
+
+* 修复把开发的依赖打包的bug ([840dd5a](https://github.com/snowords/open-any-url/commit/840dd5a952d1961f2effc47f1d37d3e23f3858bd))
+
 ## 1.1.0 (2021-12-14)
 
 
