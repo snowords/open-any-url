@@ -26,8 +26,8 @@
 	"contributes": {
 		"commands": [{
 			"command": "OpenAnyUrl.Start",
-			"title": "打开任意URL",
-			"category": "Brower",
+			"title": "Start",
+			"category": "OpenUrl",
 			"icon": {
 				"light": "Images/icon.svg",
 				"dark": "Images/icon.svg"
@@ -42,9 +42,9 @@
 	"license": "SEE LICENSE IN LICENSE.md",
 	"bugs": {
 		"url": "https://github.com/snowords/open-any-url/issues",
-		"email": "zhengxinzhe@jackyzheng.uu.me"
+		"email": "33chijian@gmail.com"
 	},
-	"homepage": "https://github.com/snowords/open-any-url/blob/master/README.md",
+	"homepage": "https://github.com/snowords/open-any-url/blob/main/README.md",
 
 	"scripts": {
 		"lint": "eslint .",

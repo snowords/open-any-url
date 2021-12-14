@@ -35,55 +35,72 @@ function activate(context) {
 		// Display a message box to the user
 		//vscode.window.showInformationMessage('Hello World from open-any-url!');
 
-		// 1.创建并显示Webview
-		const panel = vscode.window.createWebviewPanel(
-			// 该webview的标识，任意字符串
-			'WeRead',
-			// webview面板的标题，会展示给用户
-			'微信读书',
-			// webview面板所在的分栏
-			vscode.ViewColumn.One,
-			// 其它webview选项
-			{
-				enableScripts: true, // 启用JS，默认禁用
-				retainContextWhenHidden: true, // webview被隐藏时保持状态，避免被重置
+		vscode.window.showInputBox({ 	// 这个对象中所有参数都是可选参数
+			password:false, // 输入内容是否是密码
+			ignoreFocusOut:true, // 默认false，设置为true时鼠标点击别的地方输入框不会消失
+			placeHolder:'https://...', // 在输入框内的提示信息
+			prompt:'请输入正确的URL地址', // 在输入框下方的提示信息
+			validateInput: text => {
+				const reg  = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/
+				return reg.test(text) ? null : 'Url格式不正确！';
 			}
+		}).then(function (url) {
+			if(url) {
+				vscode.window.showInformationMessage("即将在Tab页中打开：" + url);
+				// 1.创建并显示Webview
+				const panel = vscode.window.createWebviewPanel(
+					// 该webview的标识，任意字符串
+					'WeRead',
+					// webview面板的标题，会展示给用户
+					'微信读书',
+					// webview面板所在的分栏
+					vscode.ViewColumn.One,
+					// 其它webview选项
+					{
+						enableScripts: true, // 启用JS，默认禁用
+						retainContextWhenHidden: true, // webview被隐藏时保持状态，避免被重置
+					}
+		
+				);
+				//设置标题前图标
+		
+				//panel.iconPath = vscode.Uri.file(context.extensionPath + '/Images/iconDark.png');
+		
+				panel.iconPath = {
+					dark: vscode.Uri.file(context.extensionPath + '/Images/iconDark.png'),
+					light: vscode.Uri.file(context.extensionPath + '/Images/iconBlack.png')
+				};
+		
+				panel.webview.html = `<!DOCTYPE html>
+										<html lang="en">
+										<head>
+											<meta charset="UTF-8">
+											<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+											<meta content="portrait" name="x5-orientation">
+											<meta content="true" name="x5-fullscreen">
+											<meta content="portrait" name="screen-orientation">
+											<meta content="yes" name="full-screen">
+											<meta content="webkit" name="renderer">
+											<meta content="IE=Edge" http-equiv="X-UA-Compatible">
+											<title>微信读书</title>
+											<style>
+											html,body,iframe{
+												width:100%;
+												height:100%;
+												border:0;
+												overflow: hidden;
+											}
+											</style>
+										</head>
+										<body>
+											<iframe src="${url}"/>
+										</body>
+										</html>`;
+			}else {
+				vscode.window.showInformationMessage("未输入Url");
+			}
+		});
 
-		);
-		//设置标题前图标
-
-		//panel.iconPath = vscode.Uri.file(context.extensionPath + '/Images/iconDark.png');
-
-		panel.iconPath = {
-			dark: vscode.Uri.file(context.extensionPath + '/Images/iconDark.png'),
-			light: vscode.Uri.file(context.extensionPath + '/Images/iconBlack.png')
-		};
-
-		panel.webview.html = `<!DOCTYPE html>
-								<html lang="en">
-								<head>
-									<meta charset="UTF-8">
-									<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-									<meta content="portrait" name="x5-orientation">
-									<meta content="true" name="x5-fullscreen">
-									<meta content="portrait" name="screen-orientation">
-									<meta content="yes" name="full-screen">
-									<meta content="webkit" name="renderer">
-									<meta content="IE=Edge" http-equiv="X-UA-Compatible">
-									<title>微信读书</title>
-									<style>
-									html,body,iframe{
-										width:100%;
-										height:100%;
-										border:0;
-										overflow: hidden;
-									}
-									</style>
-								</head>
-								<body>
-									<iframe src="https://weread.qq.com/"/>
-								</body>
-								</html>`;
 	});
 
 	context.subscriptions.push(disposable);
