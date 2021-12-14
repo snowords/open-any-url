@@ -63,7 +63,7 @@
 		"lint": "eslint .",
 		"pretest": "npm run lint",
 		"test": "node ./test/runTest.js",
-		"standard": "standard-version"
+		"standard": "standard-version && vsce package"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
@@ -74,9 +74,7 @@
 		"glob": "^7.1.6",
 		"mocha": "^8.0.1",
 		"typescript": "^3.8.3",
-		"vscode-test": "^1.4.0"
-	},
-	"dependencies": {
+		"vscode-test": "^1.4.0",
 		"standard-version": "^9.3.2"
 	}
 }
