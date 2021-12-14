@@ -63,7 +63,7 @@
 		"lint": "eslint .",
 		"pretest": "npm run lint",
 		"test": "node ./test/runTest.js",
-		"standard": "standard-version && vsce package"
+		"standard": "standard-version && vsce package && git push --follow-tags origin main"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
