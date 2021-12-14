@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/snowords/open-any-url/compare/v1.2.0...v1.3.0) (2021-12-14)
+
+
+### Features
+
+* 增加自动上传标签功能 ([112c53a](https://github.com/snowords/open-any-url/commit/112c53a5f7c1246ad63b6f2cccbf0685fdf14ff6))
+
 ## [1.2.0](https://github.com/snowords/open-any-url/compare/v1.1.1...v1.2.0) (2021-12-14)
 
 
