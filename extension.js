@@ -82,7 +82,7 @@ function activate(context) {
 											<meta content="yes" name="full-screen">
 											<meta content="webkit" name="renderer">
 											<meta content="IE=Edge" http-equiv="X-UA-Compatible">
-											<title>微信读书</title>
+											<title>新标签页</title>
 											<style>
 											html,body,iframe{
 												width:100%;
