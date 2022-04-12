@@ -1,31 +1,31 @@
 {
-	"name": "open-any-url",
-	"displayName": "Open Any Url",
-  "version": "0.2.16",
-	"description": "Open any url in your VSCode",
-	"categories": [
-		"Other",
+  "name": "open-any-url",
+  "displayName": "Open Any Url",
+  "version": "0.2.17",
+  "description": "Open any url in your VSCode",
+  "categories": [
+    "Other",
     "Debuggers"
-	],
-	"keywords": [
-		"Open URL",
-		"Open Any Url",
-		"Open Browser",
-		"Inner Brower",
-		"Open Web Page",
-		"Browser Lite"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/snowords/open-any-url.git"
-	},
+  ],
+  "keywords": [
+    "Open URL",
+    "Open Any Url",
+    "Open Browser",
+    "Inner Brower",
+    "Open Web Page",
+    "Browser Lite"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snowords/open-any-url.git"
+  },
   "homepage": "https://github.com/snowords/open-any-url/blob/main/README.md",
   "license": "MIT",
   "author": {
     "name": "snowords",
     "email": "33chijian@gmail.com"
   },
-	"publisher": "snowords",
+  "publisher": "snowords",
   "main": "./dist/extension.js",
   "scripts": {
     "build:dev": "vite build && npm run build:ts",
@@ -325,9 +325,9 @@
     "vite": "^2.1.2",
     "vsce": "^1.93.0"
   },
-	"engines": {
-		"vscode": "^1.63.0"
-	},
+  "engines": {
+    "vscode": "^1.63.0"
+  },
   "icon": "resources/icon.png",
   "preview": true,
   "extensionKind": [
