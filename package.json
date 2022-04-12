@@ -1,80 +1,336 @@
 {
 	"name": "open-any-url",
+	"displayName": "Open Any Url",
+  "version": "0.2.16",
+	"description": "Open any url in your VSCode",
+	"categories": [
+		"Other",
+    "Debuggers"
+	],
+	"keywords": [
+		"Open URL",
+		"Open Any Url",
+		"Open Browser",
+		"Inner Brower",
+		"Open Web Page",
+		"Browser Lite"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/snowords/open-any-url.git"
 	},
-	"displayName": "Open Any Url",
-	"description": "Open Any Url extension for VSCode",
-	"version": "1.3.0",
-	"author": {
-		"name": "snowords"
-	},
+  "homepage": "https://github.com/snowords/open-any-url/blob/main/README.md",
+  "license": "MIT",
+  "author": {
+    "name": "snowords",
+    "email": "33chijian@gmail.com"
+  },
 	"publisher": "snowords",
+  "main": "./dist/extension.js",
+  "scripts": {
+    "build:dev": "vite build && npm run build:ts",
+    "build": "rimraf dist && vite build && npm run build:ts -- --minify",
+    "build:ts": "tsup src/extension.ts --external=vscode -d dist",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "npm run lint -- --fix",
+    "release": "npx bumpp --commit --tag --push"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "category": "Browse Lite",
+        "command": "browse-lite.open",
+        "title": "Open..."
+      },
+      {
+        "category": "Browse Lite",
+        "command": "browse-lite.openActiveFile",
+        "title": "Open Active File in Preview"
+      },
+      {
+        "category": "Browse Lite",
+        "command": "browse-lite.controls.refresh",
+        "title": "Refresh Page",
+        "icon": "$(refresh)"
+      },
+      {
+        "category": "Browse Lite",
+        "command": "browse-lite.controls.external",
+        "title": "Open page with system browser",
+        "icon": "$(link-external)"
+      },
+      {
+        "category": "Browse Lite",
+        "command": "browse-lite.controls.debug",
+        "title": "Open debug page",
+        "icon": "$(bug)"
+      }
+    ],
+    "configuration": {
+      "title": "Browse Lite",
+      "type": "object",
+      "properties": {
+        "browse-lite.startUrl": {
+          "description": "The default start url for new Browse Lite instances",
+          "type": "string"
+        },
+        "browse-lite.chromeExecutable": {
+          "description": "The full path to the executable, including the complete filename of the executable",
+          "type": "string"
+        },
+        "browse-lite.verbose": {
+          "default": false,
+          "description": "Toggles verbose logging",
+          "type": "boolean"
+        },
+        "browse-lite.debugHost": {
+          "default": "localhost",
+          "description": "Host name for debug",
+          "type": "string"
+        },
+        "browse-lite.debugPort": {
+          "default": 9222,
+          "description": "Port number for debug, when occupied, it will try to find another one by self bumpping.",
+          "type": "number"
+        },
+        "browse-lite.format": {
+          "default": "png",
+          "enum": [
+            "png",
+            "jpeg"
+          ],
+          "description": "The type of image used in rendering preview.",
+          "type": "string"
+        },
+        "browse-lite.ignoreHttpsErrors": {
+          "default": true,
+          "description": "Ignore HTTPS errors if you are using self-signed SSL certificates",
+          "type": "boolean"
+        },
+        "browse-lite.quality": {
+          "default": 100,
+          "description": "Image quality of screencasting",
+          "type": "number"
+        },
+        "browse-lite.everyNthFrame": {
+          "default": 1,
+          "description": "Skip for frames of screencasting",
+          "type": "number"
+        },
+        "browse-lite.localFileAutoReload": {
+          "default": true,
+          "description": "Automatically reload page on local file changes",
+          "type": "boolean"
+        }
+      }
+    },
+    "debuggers": [
+      {
+        "type": "browse-lite",
+        "label": "Browse Lite",
+        "configurationSnippets": [
+          {
+            "label": "Browse Lite: Launch",
+            "description": "Launch Browse Lite to localhost",
+            "body": {
+              "type": "browse-lite",
+              "request": "launch",
+              "name": "Browse Lite: Launch",
+              "url": "http://localhost:3000"
+            }
+          },
+          {
+            "label": "Browse Lite: Attach",
+            "description": "Attach to open Browse Lite instances",
+            "body": {
+              "type": "browse-lite",
+              "request": "attach",
+              "name": "Browse Lite: Attach"
+            }
+          }
+        ],
+        "configurationAttributes": {
+          "launch": {
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "Absolute url to launch",
+                "default": "http://localhost:3000"
+              },
+              "webRoot": {
+                "type": "string",
+                "description": "This specifies the workspace absolute path to the webserver root. Used to resolve paths like `/app.js` to files on disk. Shorthand for a pathMapping for \"/\"",
+                "default": "${workspaceFolder}"
+              },
+              "pathMapping": {
+                "type": "object",
+                "description": "A mapping of URLs/paths to local folders, to resolve scripts in Chrome to scripts on disk",
+                "default": {
+                  "/": "${workspaceFolder}"
+                }
+              },
+              "trace": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "enum": [
+                  "verbose",
+                  true
+                ],
+                "default": true,
+                "description": "When 'true', the debugger will log tracing info to a file. When 'verbose', it will also show logs in the console."
+              },
+              "sourceMapPathOverrides": {
+                "type": "object",
+                "description": "A set of mappings for rewriting the locations of source files from what the sourcemap says, to their locations on disk. See README for details.",
+                "default": {
+                  "webpack:///./*": "${webRoot}/*",
+                  "webpack:///src/*": "${webRoot}/*",
+                  "webpack:///*": "*",
+                  "webpack:///./~/*": "${webRoot}/node_modules/*",
+                  "meteor://💻app/*": "${webRoot}/*"
+                }
+              }
+            }
+          },
+          "attach": {
+            "properties": {
+              "urlFilter": {
+                "type": "string",
+                "description": "Will search for a page with this url and attach to it, if found. Can have * wildcards.",
+                "default": ""
+              },
+              "webRoot": {
+                "type": "string",
+                "description": "This specifies the workspace absolute path to the webserver root. Used to resolve paths like `/app.js` to files on disk. Shorthand for a pathMapping for \"/\"",
+                "default": "${workspaceFolder}"
+              },
+              "pathMapping": {
+                "type": "object",
+                "description": "A mapping of URLs/paths to local folders, to resolve scripts in Chrome to scripts on disk",
+                "default": {
+                  "/": "${workspaceFolder}"
+                }
+              },
+              "trace": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "enum": [
+                  "verbose",
+                  true
+                ],
+                "default": true,
+                "description": "When 'true', the debugger will log tracing info to a file. When 'verbose', it will also show logs in the console."
+              },
+              "sourceMapPathOverrides": {
+                "type": "object",
+                "description": "A set of mappings for rewriting the locations of source files from what the sourcemap says, to their locations on disk. See README for details.",
+                "default": {
+                  "webpack:///./*": "${webRoot}/*",
+                  "webpack:///src/*": "${webRoot}/*",
+                  "webpack:///*": "*",
+                  "webpack:///./~/*": "${webRoot}/node_modules/*",
+                  "meteor://💻app/*": "${webRoot}/*"
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "resourceScheme == webview-panel && browse-lite-active",
+          "command": "browse-lite.controls.external",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceScheme == webview-panel && browse-lite-active && !browse-lite-debug-active",
+          "command": "browse-lite.controls.debug",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "browse-lite.controls.refresh",
+          "when": "false"
+        },
+        {
+          "command": "browse-lite.controls.external",
+          "when": "false"
+        },
+        {
+          "command": "browse-lite.controls.debug",
+          "when": "false"
+        }
+      ]
+    }
+  },
+  "activationEvents": [
+    "onCommand:browse-lite.open",
+    "onCommand:browse-lite.openActiveFile",
+    "onOpenExternalUri:http",
+    "onOpenExternalUri:https",
+    "onDebugInitialConfigurations",
+    "onDebug",
+    "onFileSystem:vsls"
+  ],
+  "eslintConfig": {
+    "extends": "@antfu",
+    "rules": {
+      "eqeqeq": 0,
+      "no-case-declarations": 0,
+      "no-console": 1,
+      "no-use-before-define": 0,
+      "@typescript-eslint/no-var-requires": 0
+    },
+    "root": true
+  },
+  "resolutions": {
+    "@types/react": "16.7.18"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.6.2",
+    "@chiragrupani/karma-chromium-edge-launcher": "^2.1.0",
+    "@types/jest": "26.0.21",
+    "@types/karma-chrome-launcher": "^3.1.0",
+    "@types/lodash": "^4.14.168",
+    "@types/node": "14.14.35",
+    "@types/puppeteer-core": "^5.4.0",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@types/vscode": "^1.53.0",
+    "@vitejs/plugin-react-refresh": "^1.3.1",
+    "browser-viewport-device-descriptions": "^1.1.0",
+    "conventional-github-releaser": "^3.1.5",
+    "element-to-source": "^1.0.1",
+    "eslint": "^7.22.0",
+    "event-emitter-enhancer": "^2.0.0",
+    "eventemitter2": "^6.4.4",
+    "find-up": "^5.0.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "lodash": "^4.17.21",
+    "ovsx": "^0.1.0",
+    "puppeteer-core": "^8.0.0",
+    "re-resizable": "^6.9.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rimraf": "^3.0.2",
+    "tsup": "^4.8.19",
+    "typescript": "^4.2.3",
+    "vite": "^2.1.2",
+    "vsce": "^1.93.0"
+  },
 	"engines": {
 		"vscode": "^1.63.0"
 	},
-	"categories": [
-		"Other",
-		"Keymaps",
-		"Language Packs",
-		"Extension Packs"
-	],
-	"keywords": [
-		"vscode",
-		"plugin",
-		"webView",
-		"inner brower",
-		"open any url",
-		"open url in vscode"
-	],
-	"icon": "Images/icon.png",
-	"activationEvents": [
-		"onCommand:OpenAnyUrl.Start"
-	],
-	"main": "./extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "OpenAnyUrl.Start",
-				"title": "Start",
-				"category": "OpenUrl",
-				"icon": {
-					"light": "Images/icon.svg",
-					"dark": "Images/icon.svg"
-				}
-			}
-		],
-		"keybindings": [
-			{
-				"command": "OpenAnyUrl.Start",
-				"key": "ctrl+f3",
-				"mac": "cmd+f3"
-			}
-		]
-	},
-	"license": "SEE LICENSE IN LICENSE.md",
-	"bugs": {
-		"url": "https://github.com/snowords/open-any-url/issues",
-		"email": "33chijian@gmail.com"
-	},
-	"homepage": "https://github.com/snowords/open-any-url/blob/main/README.md",
-	"scripts": {
-		"lint": "eslint .",
-		"pretest": "npm run lint",
-		"test": "node ./test/runTest.js",
-		"standard": "standard-version && vsce package && git push --follow-tags origin main"
-	},
-	"devDependencies": {
-		"@types/glob": "^7.1.3",
-		"@types/mocha": "^8.0.0",
-		"@types/node": "^14.0.27",
-		"@types/vscode": "^1.48.0",
-		"eslint": "^7.6.0",
-		"glob": "^7.1.6",
-		"mocha": "^8.0.1",
-		"typescript": "^3.8.3",
-		"vscode-test": "^1.4.0",
-		"standard-version": "^9.3.2"
-	}
+  "icon": "resources/icon.png",
+  "preview": true,
+  "extensionKind": [
+    "ui"
+  ]
 }
