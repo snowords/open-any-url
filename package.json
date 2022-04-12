@@ -34,7 +34,7 @@
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "npm run lint -- --fix",
     "release": "npx bumpp --commit --tag --push",
-    "publish": "vsce package && vsce publish --no-dependencies"
+    "publish-ex": "vsce package && vsce publish --no-dependencies"
   },
   "contributes": {
     "commands": [
